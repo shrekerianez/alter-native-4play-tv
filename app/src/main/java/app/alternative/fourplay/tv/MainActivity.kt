@@ -1,6 +1,5 @@
 package app.alternative.fourplay.tv
 
-import android.app.Activity
 import android.graphics.Color
 import android.net.ConnectivityManager
 import android.net.Network
@@ -20,8 +19,10 @@ import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.activity.ComponentActivity
+import androidx.activity.OnBackPressedCallback
 
-class MainActivity : Activity() {
+class MainActivity : ComponentActivity() {
 
     companion object {
         private const val TV_URL = "https://shrekerianez.github.io/alter-native-4play/?tv"
@@ -127,6 +128,16 @@ class MainActivity : Activity() {
         root.addView(webView, FrameLayout.LayoutParams(-1, -1))
         root.addView(overlay, FrameLayout.LayoutParams(-1, -1))
         setContentView(root)
+
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (webView.canGoBack()) {
+                    webView.goBack()
+                } else {
+                    finish()
+                }
+            }
+        })
 
         connectivityManager = getSystemService(ConnectivityManager::class.java)
         registerNetworkCallback()
@@ -247,15 +258,6 @@ class MainActivity : Activity() {
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
         if (hasFocus) hideSystemUi()
-    }
-
-    @Deprecated("Deprecated in Android API; retained for broad Android TV compatibility")
-    override fun onBackPressed() {
-        if (webView.canGoBack()) {
-            webView.goBack()
-        } else {
-            super.onBackPressed()
-        }
     }
 
     override fun onDestroy() {

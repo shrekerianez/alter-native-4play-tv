@@ -19,3 +19,7 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 }
+
+dependencies {
+    implementation("androidx.activity:activity-ktx:1.13.0")
+}
