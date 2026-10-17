@@ -73,7 +73,7 @@ class MainActivity : Activity() {
 
         webView = WebView(this).apply {
             setBackgroundColor(Color.rgb(10, 10, 13))
-            visibility = View.INVISIBLE
+            setVisibility(View.INVISIBLE)
             isFocusable = true
             isFocusableInTouchMode = true
             settings.apply {
@@ -96,8 +96,8 @@ class MainActivity : Activity() {
 
                 override fun onPageFinished(view: WebView?, url: String?) {
                     if (!pageFailed) {
-                        view?.visibility = View.VISIBLE
-                        overlay.visibility = View.GONE
+                        view?.setVisibility(View.VISIBLE)
+                        overlay.setVisibility(View.GONE)
                         view?.requestFocus()
                     }
                 }
@@ -189,20 +189,20 @@ class MainActivity : Activity() {
     }
 
     private fun showLoading() {
-        overlay.visibility = View.VISIBLE
+        overlay.setVisibility(View.VISIBLE)
         overlayTitle.text = "Подключаем 4PLAY"
         overlayMessage.text = ""
-        progress.visibility = View.VISIBLE
-        retryButton.visibility = View.GONE
+        progress.setVisibility(View.VISIBLE)
+        retryButton.setVisibility(View.GONE)
     }
 
     private fun showOffline() {
-        webView.visibility = View.INVISIBLE
-        overlay.visibility = View.VISIBLE
+        webView.setVisibility(View.INVISIBLE)
+        overlay.setVisibility(View.VISIBLE)
         overlayTitle.text = "Нет подключения к интернету"
         overlayMessage.text = "Проверьте сеть и попробуйте снова"
-        progress.visibility = View.GONE
-        retryButton.visibility = View.VISIBLE
+        progress.setVisibility(View.GONE)
+        retryButton.setVisibility(View.VISIBLE)
         retryButton.requestFocus()
     }
 
