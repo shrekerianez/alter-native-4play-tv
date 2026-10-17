@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "app.alternative.fourplay.tv"
-    compileSdk = 37
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "app.alternative.fourplay.tv"
