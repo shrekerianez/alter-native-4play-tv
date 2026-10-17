@@ -97,7 +97,7 @@ class MainActivity : Activity() {
                 override fun onPageFinished(view: WebView?, url: String?) {
                     if (!pageFailed) {
                         view?.setVisibility(View.VISIBLE)
-                        overlay.setVisibility(View.GONE)
+                        this@MainActivity.overlay.setVisibility(View.GONE)
                         view?.requestFocus()
                     }
                 }
