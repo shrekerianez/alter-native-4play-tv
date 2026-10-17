@@ -34,19 +34,16 @@ jobs:
 
       - name: Prepare dev assets
         run: |
-          cp app/build/outputs/apk/debug/app-debug.apk 4PLAY-TV-v0.1.0-dev-debug.apk
-          sha256sum 4PLAY-TV-v0.1.0-dev-debug.apk > 4PLAY-TV-v0.1.0-dev-debug.apk.sha256
+          mkdir -p downloads
+          cp app/build/outputs/apk/debug/app-debug.apk downloads/4PLAY-TV-v0.1.0-dev-debug.apk
+          sha256sum downloads/4PLAY-TV-v0.1.0-dev-debug.apk > downloads/4PLAY-TV-v0.1.0-dev-debug.apk.sha256
 
-      - name: Create GitHub prerelease
-        env:
-          GH_TOKEN: ${{ github.token }}
+      - name: Publish dev APK to repository
         run: |
-          gh release create v0.1.0-dev \
-            4PLAY-TV-v0.1.0-dev-debug.apk \
-            4PLAY-TV-v0.1.0-dev-debug.apk.sha256 \
-            --target "$GITHUB_SHA" \
-            --title "4PLAY TV v0.1.0-dev" \
-            --prerelease \
-            --notes "Первая тестовая Android TV / Google TV сборка 4PLAY TV. Это DEBUG APK для проверки на реальном телевизоре, не production-релиз."
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add downloads/4PLAY-TV-v0.1.0-dev-debug.apk downloads/4PLAY-TV-v0.1.0-dev-debug.apk.sha256
+          git commit -m "Publish 4PLAY TV v0.1.0-dev debug APK"
+          git push
 
-# This workflow intentionally publishes a prerelease debug APK for device testing only.
+# Temporary DEV distribution channel. Production builds will use signed GitHub Releases.
