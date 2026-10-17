@@ -96,9 +96,9 @@ class MainActivity : Activity() {
 
                 override fun onPageFinished(view: WebView?, url: String?) {
                     if (!pageFailed) {
-                        visibility = View.VISIBLE
+                        view?.visibility = View.VISIBLE
                         overlay.visibility = View.GONE
-                        requestFocus()
+                        view?.requestFocus()
                     }
                 }
 
