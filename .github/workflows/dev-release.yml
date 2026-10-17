@@ -1,0 +1,50 @@
+name: Publish dev APK
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/dev-release.yml
+
+permissions:
+  contents: write
+
+jobs:
+  publish-dev:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Gradle 9.6
+        uses: gradle/actions/setup-gradle@v6
+        with:
+          gradle-version: '9.6.0'
+
+      - name: Build debug APK
+        run: gradle --no-daemon assembleDebug
+
+      - name: Prepare dev assets
+        run: |
+          cp app/build/outputs/apk/debug/app-debug.apk 4PLAY-TV-v0.1.0-dev-debug.apk
+          sha256sum 4PLAY-TV-v0.1.0-dev-debug.apk > 4PLAY-TV-v0.1.0-dev-debug.apk.sha256
+
+      - name: Create GitHub prerelease
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create v0.1.0-dev \
+            4PLAY-TV-v0.1.0-dev-debug.apk \
+            4PLAY-TV-v0.1.0-dev-debug.apk.sha256 \
+            --target "$GITHUB_SHA" \
+            --title "4PLAY TV v0.1.0-dev" \
+            --prerelease \
+            --notes "Первая тестовая Android TV / Google TV сборка 4PLAY TV. Это DEBUG APK для проверки на реальном телевизоре, не production-релиз."
