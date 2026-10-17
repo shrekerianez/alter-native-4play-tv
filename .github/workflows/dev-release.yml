@@ -48,3 +48,5 @@ jobs:
             --title "4PLAY TV v0.1.0-dev" \
             --prerelease \
             --notes "Первая тестовая Android TV / Google TV сборка 4PLAY TV. Это DEBUG APK для проверки на реальном телевизоре, не production-релиз."
+
+# This workflow intentionally publishes a prerelease debug APK for device testing only.
