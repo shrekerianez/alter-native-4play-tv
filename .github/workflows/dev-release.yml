@@ -6,6 +6,8 @@ on:
       - main
     paths:
       - .github/workflows/dev-release.yml
+      - app/src/main/java/**
+      - app/build.gradle.kts
 
 permissions:
   contents: write
@@ -35,15 +37,15 @@ jobs:
       - name: Prepare dev assets
         run: |
           mkdir -p downloads
-          cp app/build/outputs/apk/debug/app-debug.apk downloads/4PLAY-TV-v0.1.0-dev-debug.apk
-          sha256sum downloads/4PLAY-TV-v0.1.0-dev-debug.apk > downloads/4PLAY-TV-v0.1.0-dev-debug.apk.sha256
+          cp app/build/outputs/apk/debug/app-debug.apk downloads/4PLAY-TV-v0.2.0-dev-debug.apk
+          sha256sum downloads/4PLAY-TV-v0.2.0-dev-debug.apk > downloads/4PLAY-TV-v0.2.0-dev-debug.apk.sha256
 
       - name: Publish dev APK to repository
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add downloads/4PLAY-TV-v0.1.0-dev-debug.apk downloads/4PLAY-TV-v0.1.0-dev-debug.apk.sha256
-          git commit -m "Publish 4PLAY TV v0.1.0-dev debug APK"
+          git add downloads/4PLAY-TV-v0.2.0-dev-debug.apk downloads/4PLAY-TV-v0.2.0-dev-debug.apk.sha256
+          git commit -m "Publish 4PLAY TV v0.2.0-dev debug APK"
           git push
 
 # Temporary DEV distribution channel. Production builds will use signed GitHub Releases.
