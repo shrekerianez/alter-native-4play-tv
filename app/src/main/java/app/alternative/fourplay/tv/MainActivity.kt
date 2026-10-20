@@ -85,7 +85,9 @@ class MainActivity : ComponentActivity() {
                 builtInZoomControls = false
                 displayZoomControls = false
                 setSupportZoom(false)
-                mediaPlaybackRequiresUserGesture = true
+                // 4PLAY is controlled from players' phones, so music must not
+                // require a button press on the television itself.
+                mediaPlaybackRequiresUserGesture = false
                 userAgentString = "$userAgentString 4PLAY-TV/AndroidTV"
             }
             CookieManager.getInstance().setAcceptCookie(true)
